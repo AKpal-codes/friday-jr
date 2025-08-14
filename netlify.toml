@@ -1,0 +1,14 @@
+[build]
+  command = ""
+  publish = "."
+
+[functions]
+  directory = "functions"
+
+# Helpful CORS headers for the functions
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"

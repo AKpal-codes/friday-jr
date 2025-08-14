@@ -1,0 +1,9 @@
+{
+  "name": "FRIDAY Voice Assistant",
+  "short_name": "FRIDAY",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0b1320",
+  "theme_color": "#0b1320",
+  "icons": []
+}

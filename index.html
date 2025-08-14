@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+  <title>FRIDAY • Voice Assistant</title>
+</head>
+<body>
+  <header>
+    <h1>FRIDAY</h1>
+    <button id="installBtn" hidden>Install App</button>
+  </header>
+
+  <main>
+    <div id="status">idle</div>
+
+    <div class="chat"><div id="messages"></div></div>
+
+    <div class="controls">
+      <button id="micBtn" aria-label="Hold to talk">🎙️ Hold to talk</button>
+      <textarea id="textInput" placeholder="Or type here…" rows="2"></textarea>
+      <button id="sendBtn">Send</button>
+    </div>
+
+    <div class="settings">
+      <label>Voice:
+        <select id="voiceSelect"></select>
+      </label>
+      <label><input type="checkbox" id="speakToggle" checked /> Speak replies</label>
+      <label><input type="checkbox" id="cloudTtsToggle" /> Use natural TTS (OpenAI)</label>
+      <small id="ttsHint">Enable this only after adding OPENAI_API_KEY in Netlify.</small>
+    </div>
+  </main>
+
+  <footer>
+    <small>For fan role-play only. Not affiliated with Marvel.</small>
+  </footer>
+
+  <script type="module" src="persona.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
