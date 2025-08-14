@@ -60,9 +60,15 @@ function speakLocal(text) {
   window.speechSynthesis.speak(u);
 }
 
-// TTS - cloud (OpenAI) via function (returns audio/mpeg blob)
-async function speakCloud(text, voice = "rachel") {
+async function speakCloud(text, voice) {
   if (!speakToggle.checked) return;
+
+  // Read voice from dropdown if not explicitly passed
+  if (!voice) {
+    const voiceSelect = document.getElementById("voiceSelect");
+    voice = voiceSelect ? voiceSelect.value : "rachel";
+  }
+
   try {
     const r = await fetch('/.netlify/functions/tts', {
       method: 'POST',
@@ -181,7 +187,7 @@ if (!convo.length) {
   // Speak using cloud TTS (random or fixed voice)
   window.addEventListener("DOMContentLoaded", () => {
     if (cloudTtsToggle.checked) {
-      speakCloud(hello, "rachel"); // you can change "bella" to any voice
+      speakCloud(hello, "rachel");
     } else {
       speakLocal(hello);
     }

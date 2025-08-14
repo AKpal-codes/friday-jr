@@ -29,8 +29,14 @@
         <select id="voiceSelect"></select>
       </label>
       <label><input type="checkbox" id="speakToggle" checked /> Speak replies</label>
-      <label><input type="checkbox" id="cloudTtsToggle" /> Use natural TTS (OpenAI)</label>
-      <small id="ttsHint">Enable this only after adding OPENAI_API_KEY in Netlify.</small>
+      <label><input type="checkbox" id="cloudTtsToggle" /> Use natural TTS (ElevenLabs)</label>
+      <label for="voiceSelect">Voice:</label>
+      <select id="voiceSelect">
+        <option value="rachel">Rachel</option>
+        <option value="bella">Bella</option>
+        <option value="antoni">Antoni</option>
+        <option value="dom">Dom</option>
+      </select>
     </div>
   </main>
 
