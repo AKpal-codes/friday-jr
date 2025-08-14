@@ -61,13 +61,13 @@ function speakLocal(text) {
 }
 
 // TTS - cloud (OpenAI) via function (returns audio/mpeg blob)
-async function speakCloud(text) {
+async function speakCloud(text, voice = "rachel") {
   if (!speakToggle.checked) return;
   try {
     const r = await fetch('/.netlify/functions/tts', {
       method: 'POST',
       headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ text })
+      body: JSON.stringify({ text, voice })
     });
     if (!r.ok) throw new Error(await r.text());
     const blob = await r.blob();
@@ -173,11 +173,21 @@ textInput.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shift
 
 // greet on first load
 if (!convo.length) {
-  const hello = 'Hello, Peter.';
+  const hello = 'Hello, Peter. Welcome back!';
   addMsg('assistant', hello);
   convo.push({ role:'assistant', content: hello });
   saveConvo();
+
+  // Speak using cloud TTS (random or fixed voice)
+  window.addEventListener("DOMContentLoaded", () => {
+    if (cloudTtsToggle.checked) {
+      speakCloud(hello, "rachel"); // you can change "bella" to any voice
+    } else {
+      speakLocal(hello);
+    }
+  });
 }
+
 
 // service worker
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
