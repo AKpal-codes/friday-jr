@@ -51,7 +51,8 @@ function saveConvo() { localStorage.setItem('convo', JSON.stringify(convo.slice(
 function speakLocal(text) {
   if (!speakToggle.checked) return;
   const u = new SpeechSynthesisUtterance(text);
-  const v = speechSynthesis.getVoices().find(v => v.name === voiceSelect.value);
+  const voices = speechSynthesis.getVoices();
+  const v = voices.find(v => v.name === voiceSelect.value) || voices[0]; // fallback
   if (v) u.voice = v;
   speaking = true;
   u.onend = () => { speaking = false; };
@@ -92,13 +93,22 @@ function getRecognizer() {
 recognition = getRecognizer();
 
 function holdToTalkPress() {
+  recognition = getRecognizer();
   if (!recognition) { alert('Speech recognition not supported on this browser. Type instead.'); return; }
   textInput.value = '';
   setStatus('listening…');
-  // prime mic permission on first interaction if needed
   navigator.mediaDevices?.getUserMedia?.({ audio: true }).catch(()=>{});
   recognition.start();
+
+  recognition.onresult = (e) => {
+    let final = '';
+    for (const res of e.results) final += res[0].transcript;
+    textInput.value = final.trim();
+  };
+  recognition.onerror = (ev) => { console.warn('STT error:', ev.error); setStatus('error (mic)'); };
+  recognition.onend = () => setStatus('idle');
 }
+
 function holdToTalkRelease() {
   if (recognition) recognition.stop();
   setStatus('processing…');
